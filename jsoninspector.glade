@@ -8,6 +8,8 @@
       <column type="gchararray"/>
       <!-- column-name value_val -->
       <column type="gchararray"/>
+      <!-- column-name type_val -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkWindow" id="MainWindow">
@@ -118,6 +120,13 @@
                   <object class="GtkTreeViewColumn" id="treeviewcolumn2">
                     <property name="resizable">True</property>
                     <property name="title">Valor</property>
+                    <property name="expand">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="treeviewcolumn3">
+                    <property name="resizable">True</property>
+                    <property name="title">Tipo</property>
                     <property name="expand">True</property>
                   </object>
                 </child>

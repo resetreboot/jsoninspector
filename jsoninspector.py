@@ -38,6 +38,11 @@ class MainWindowMethods(object):
         columns.pack_start(cell)
         columns.add_attribute(cell, 'text', 1)
 
+        cell = gtk.CellRendererText()
+        columns = self.builder.get_object("treeviewcolumn3")
+        columns.pack_start(cell)
+        columns.add_attribute(cell, 'text', 2)
+
         self.window = self.builder.get_object("MainWindow")
         self.window.show_all()
 
@@ -128,12 +133,14 @@ class LogicObject(object):
 
             if type(self.json[key_val]) is dict:
 
-                parent_node = treestore.append(None, [str(key_val), ""])
+                parent_node = treestore.append(None, [str(key_val), "", ""])
                 self._loadTreeRec(treestore, self.json[key_val], parent_node)
 
             else:
 
-                treestore.append(None, [str(key_val), str(self.json[key_val])])
+                treestore.append(None, [str(key_val), 
+                                        str(self.json[key_val]),
+                                        str(type(self.json[key_val]))])
 
     def _loadTreeRec(self, treestore, elems, parent_node):
         """
@@ -145,12 +152,14 @@ class LogicObject(object):
 
                 new_parent_node = treestore.append(parent_node, 
                                                    [str(key_val),
-                                                   ""])
+                                                   "", ""])
                 self._loadTreeRec(treestore, elems[key_val], new_parent_node)
 
             else:
 
-                treestore.append(parent_node, [str(key_val), str(elems[key_val])])
+                treestore.append(parent_node, [str(key_val), 
+                                               str(elems[key_val]),
+                                               str(type(elems[key_val]))])
 
 
 
