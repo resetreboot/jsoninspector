@@ -26,6 +26,18 @@ class MainWindowMethods(object):
         self.builder.add_from_file("jsoninspector.glade")
         self.builder.connect_signals(self)
 
+        cell = gtk.CellRendererText()
+        columns = self.builder.get_object("treeviewcolumn1")
+        columns.pack_start(cell)
+        columns.add_attribute(cell, 'text', 0)
+        treeview = self.builder.get_object("treeview1")
+        treeview.set_expander_column(columns)
+        
+        cell = gtk.CellRendererText()
+        columns = self.builder.get_object("treeviewcolumn2")
+        columns.pack_start(cell)
+        columns.add_attribute(cell, 'text', 1)
+
         self.window = self.builder.get_object("MainWindow")
         self.window.show_all()
 
@@ -57,7 +69,10 @@ class MainWindowMethods(object):
             if self.logicObj.loadjson(filename):
                 
                 label.set_text(filename)
-
+                treeStore = self.builder.get_object("treestore1")
+                treeStore.clear()
+                self.logicObj.loadTree(treeStore)
+                
             else:
                 
                 label.set_text("No hay JSON cargado")
@@ -104,6 +119,39 @@ class LogicObject(object):
 
         f.close()
         return True
+
+    def loadTree(self, treestore):
+        """
+        Loads the JSON into the tree store for display purposes
+        """
+        for key_val in self.json.keys():
+
+            if type(self.json[key_val]) is dict:
+
+                parent_node = treestore.append(None, [str(key_val), ""])
+                self._loadTreeRec(treestore, self.json[key_val], parent_node)
+
+            else:
+
+                treestore.append(None, [str(key_val), str(self.json[key_val])])
+
+    def _loadTreeRec(self, treestore, elems, parent_node):
+        """
+        Recursive element adding to the tree
+        """
+        for key_val in elems.keys():
+
+            if type(elems[key_val]) is dict:
+
+                new_parent_node = treestore.append(parent_node, 
+                                                   [str(key_val),
+                                                   ""])
+                self._loadTreeRec(treestore, elems[key_val], new_parent_node)
+
+            else:
+
+                treestore.append(parent_node, [str(key_val), str(elems[key_val])])
+
 
 
 # Ejecucion del programa principal
