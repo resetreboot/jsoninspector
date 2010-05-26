@@ -26,13 +26,15 @@ class MainWindowMethods(object):
         self.builder.add_from_file("jsoninspector.glade")
         self.builder.connect_signals(self)
 
+        # Prepara los renderizados de columna y las asigna a los valores
         cell = gtk.CellRendererText()
         columns = self.builder.get_object("treeviewcolumn1")
         columns.pack_start(cell)
         columns.add_attribute(cell, 'text', 0)
         treeview = self.builder.get_object("treeview1")
+        # Esta columna es la que tiene los nodos de apertura y cierre
         treeview.set_expander_column(columns)
-        
+
         cell = gtk.CellRendererText()
         columns = self.builder.get_object("treeviewcolumn2")
         columns.pack_start(cell)
@@ -43,10 +45,11 @@ class MainWindowMethods(object):
         columns.pack_start(cell)
         columns.add_attribute(cell, 'text', 2)
 
+        # Obtenemos la ventana y la mostramos completamente
         self.window = self.builder.get_object("MainWindow")
         self.window.show_all()
 
-        # We get the logic and help object
+        # Obtenemos un enlace al objeto de lógica de aplicación
         self.logicObj = logic
 
     def onOpenMenuClicked(self, event):
@@ -85,6 +88,43 @@ class MainWindowMethods(object):
         # Nos deshacemos del dialogo
         chooser.destroy()
 
+    def onCopyJSONClicked(self, widget):
+        """
+        Se ha pulsado Copiar JSON
+        """
+        # Mostrar la ventana de texto
+        textWindow = self.builder.get_object("TextWindow")
+        textWindow.show_all()
+
+    def onCopyJSONDelete(self, widget, event):
+        """
+        Se ha dado a cerrar la ventana de copiar texto
+        """
+        textView = self.builder.get_object("textview1")
+        textView.hide()
+
+    def onCopyJSONAcceptClicked(self, widget):
+        """
+        Se ha aceptado el código
+        """
+        textView = self.builder.get_objects("textview1")
+        jsonBuffer = textView.get_buffer()
+        jsonText = jsonBuffer.get_text()
+
+        textWindow = self.builder.get_object("textview1")
+        textWindow.hide()
+        treestore = self.builder.get_object("treestore1")
+        treestore.clear()
+        if self.logicObj.loadJSONText(jsonText):
+            self.logicObj.loadTree(treestore)
+
+    def onCopyJSONCancelClicked(self, widget):
+        """
+        Se ha cancelado
+        """
+        textView = self.builder.get_object("textview1")
+        textView.hide()
+
     def onExitMenuClicked(self, widget):
         """
         Se ha pulsado salir
@@ -102,15 +142,15 @@ class MainWindowMethods(object):
 
 class LogicObject(object):
     """
-    Holds the some external logic of the app and persisten variables all across
-    the execution
+    Esta clase define un objeto que mantiene la lógica interna del programa y
+    nos permite un acceso a las variables principales
     """
     def __init__(self):
         self.json = None
 
     def loadjson(self, filename):
         """
-        Loads a JSON file string and creates the respective object
+        Carga un fichero JSON y crea el objeto respectivo
         """
         f = open(filename, 'r')
         try:
@@ -125,38 +165,64 @@ class LogicObject(object):
         f.close()
         return True
 
+    def loadJSONText(self, text):
+        """
+        Carga un texto JSON
+        """
+        try:
+            self.json = json.loads(text)
+        except ValueError:
+            print "JSON no válido"
+            self.json = None
+            
+            return False
+
+        return True
+
     def loadTree(self, treestore):
         """
-        Loads the JSON into the tree store for display purposes
+        Carga el JSON en el tree store para mostrarlo
         """
         for key_val in self.json.keys():
 
+            # Si el elemento contiene un diccionario
             if type(self.json[key_val]) is dict:
 
+                # Añadimos el nodo, y obtenemos la referencia
                 parent_node = treestore.append(None, [str(key_val), "", ""])
+                # De manera recursiva, entramos en el diccionario y obtenemos
+                # los nodos, añadidos como hijos de este
                 self._loadTreeRec(treestore, self.json[key_val], parent_node)
 
             else:
 
+                # Tenemos un nodo hoja, obtenemos el valor y el tipo y lo
+                # añadimos
                 treestore.append(None, [str(key_val), 
                                         str(self.json[key_val]),
                                         str(type(self.json[key_val]))])
 
     def _loadTreeRec(self, treestore, elems, parent_node):
         """
-        Recursive element adding to the tree
+        Adición recursiva de elementos al árbol
         """
         for key_val in elems.keys():
 
+            # Si el elemento contiene un diccionario
             if type(elems[key_val]) is dict:
 
+                # Añadimos el nodo, y obtenemos la referencia
                 new_parent_node = treestore.append(parent_node, 
                                                    [str(key_val),
                                                    "", ""])
+                # De manera recursiva, entramos en el diccionario y obtenemos
+                # los nodos, añadidos como hijos de este
                 self._loadTreeRec(treestore, elems[key_val], new_parent_node)
 
             else:
 
+                # Tenemos un nodo hoja, obtenemos el valor y el tipo y lo
+                # añadimos
                 treestore.append(parent_node, [str(key_val), 
                                                str(elems[key_val]),
                                                str(type(elems[key_val]))])
