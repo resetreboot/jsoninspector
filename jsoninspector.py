@@ -100,30 +100,46 @@ class MainWindowMethods(object):
         """
         Se ha dado a cerrar la ventana de copiar texto
         """
-        textView = self.builder.get_object("textview1")
-        textView.hide()
+        textWindow = self.builder.get_object("TextWindow")
+        textWindow.hide()
+
+        return True
+
+    def onCopyJSONDestroy(self, widget):
+        """
+        Se ha cerrado la ventana
+        """
+        textWindow = self.builder.get_object("TextWindow")
+        textWindow.hide()
+
+        return True
 
     def onCopyJSONAcceptClicked(self, widget):
         """
         Se ha aceptado el código
         """
-        textView = self.builder.get_objects("textview1")
+        textView = self.builder.get_object("textview1")
         jsonBuffer = textView.get_buffer()
-        jsonText = jsonBuffer.get_text()
+        jsonText = jsonBuffer.get_text(jsonBuffer.get_start_iter(),
+                                       jsonBuffer.get_end_iter())
 
-        textWindow = self.builder.get_object("textview1")
+        textWindow = self.builder.get_object("TextWindow")
         textWindow.hide()
         treestore = self.builder.get_object("treestore1")
         treestore.clear()
+
         if self.logicObj.loadJSONText(jsonText):
+            
+            status_label = self.builder.get_object("StatusLabel") 
+            status_label.set_text("Cargado desde portapapeles.")
             self.logicObj.loadTree(treestore)
 
     def onCopyJSONCancelClicked(self, widget):
         """
         Se ha cancelado
         """
-        textView = self.builder.get_object("textview1")
-        textView.hide()
+        textWindow = self.builder.get_object("TextWindow")
+        textWindow.hide()
 
     def onExitMenuClicked(self, widget):
         """
@@ -226,7 +242,6 @@ class LogicObject(object):
                 treestore.append(parent_node, [str(key_val), 
                                                str(elems[key_val]),
                                                str(type(elems[key_val]))])
-
 
 
 # Ejecucion del programa principal

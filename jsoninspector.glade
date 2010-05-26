@@ -184,14 +184,18 @@
   <object class="GtkWindow" id="TextWindow">
     <property name="title" translatable="yes">Introducir texto JSON</property>
     <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="default_width">200</property>
+    <property name="default_height">180</property>
+    <signal name="destroy" handler="onCopyJSONDestroy"/>
     <signal name="delete_event" handler="onCopyJSONDelete"/>
     <child>
       <object class="GtkVBox" id="vbox2">
         <property name="visible">True</property>
         <child>
           <object class="GtkTextView" id="textview1">
-            <property name="width_request">180</property>
-            <property name="height_request">90</property>
+            <property name="width_request">200</property>
+            <property name="height_request">140</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="wrap_mode">char</property>
@@ -214,7 +218,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <signal name="activate" handler="onCopyJSONAcceptClicked"/>
+                <signal name="clicked" handler="onCopyJSONAcceptClicked"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -232,7 +236,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <signal name="activate" handler="onCopyJSONCancelClicked"/>
+                <signal name="clicked" handler="onCopyJSONCancelClicked"/>
               </object>
               <packing>
                 <property name="expand">False</property>
