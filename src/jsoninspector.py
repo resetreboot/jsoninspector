@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from pkg_resources import resource_filename
+
 import json
 import sys
 import pygtk
@@ -23,7 +25,7 @@ class MainWindowMethods(object):
         principal
         """
         self.builder = gtk.Builder()
-        self.builder.add_from_file("jsoninspector.glade")
+        self.builder.add_from_file(resource_filename(__name__,'../../src/jsoninspector.glade'))
         self.builder.connect_signals(self)
 
         # Prepara los renderizados de columna y las asigna a los valores
@@ -243,21 +245,16 @@ class LogicObject(object):
                                                str(elems[key_val]),
                                                str(type(elems[key_val]))])
 
+
 class MainApp(object):
     """
     Clase principal
     """
-    def __init__(self):
-        """
-        Inicialización
-        """
-        self.logicObject = LogicObject()
+    @staticmethod
+    def start():
+        logicObject = LogicObject()
         mainWindow = MainWindowMethods(logicObject)
 
-    def start(self):
-        """
-        Comienza el programa
-        """
         gtk.main()
         
 

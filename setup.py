@@ -5,10 +5,11 @@ from setuptools import setup, find_packages
 setup(
     name = "jsoninspector",
     version = "1.2",
-    packages = find_packages(),
+    packages = find_packages('src', exclude=['distribute_setup']),
+    scripts = ['src/jsoninspector.py'],
     entry_points = {
         'gui_scripts': [
-            'jsoninspector = jsoninspector.MainApp.start',
+            'jsoninspector = jsoninspector:MainApp.start',
         ]
     },
     package_data = {
