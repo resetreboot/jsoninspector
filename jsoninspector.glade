@@ -154,6 +154,9 @@
               <object class="GtkLabel" id="StatusLabel">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">No hay JSON cargado</property>
+                <attributes>
+                  <attribute name="gravity" value="west"/>
+                </attributes>
               </object>
               <packing>
                 <property name="position">0</property>
