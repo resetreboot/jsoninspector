@@ -6,10 +6,13 @@ setup(
     name = "jsoninspector",
     version = "1.2",
     packages = find_packages(),
-    scripts = ['jsoninspector.py'],
-
+    entry_points = {
+        'gui_scripts': [
+            'jsoninspector = jsoninspector.start',
+        ]
+    },
     package_data = {
-        # If any package contains *.txt or *.rst files, include them:
+        # If any package contains *.glade files, include them:
         '': ['*.glade'],
     },
 
