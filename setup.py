@@ -8,7 +8,7 @@ setup(
     packages = find_packages(),
     entry_points = {
         'gui_scripts': [
-            'jsoninspector = jsoninspector.start',
+            'jsoninspector = jsoninspector.MainApp.start',
         ]
     },
     package_data = {
