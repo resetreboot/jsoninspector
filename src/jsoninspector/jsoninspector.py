@@ -243,11 +243,27 @@ class LogicObject(object):
                                                str(elems[key_val]),
                                                str(type(elems[key_val]))])
 
+class MainApp(object):
+    """
+    Clase principal
+    """
+    def __init__(self):
+        """
+        Inicialización
+        """
+        self.logicObject = LogicObject()
+        mainWindow = MainWindowMethods(logicObject)
+
+    def start(self):
+        """
+        Comienza el programa
+        """
+        gtk.main()
+        
 
 # Ejecucion del programa principal
 
 if __name__ == "__main__":
-
-    logicObject = LogicObject()
-    mainWindow = MainWindowMethods(logicObject)
-    gtk.main()
+    
+    app = MainApp()
+    app.start()
