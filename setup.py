@@ -4,7 +4,7 @@ distribute_setup.use_setuptools()
 from setuptools import setup, find_packages
 setup(
     name = "jsoninspector",
-    version = "1.2",
+    version = "1.3",
     packages = find_packages('src', exclude=['distribute_setup']),
     scripts = ['src/jsoninspector.py'],
     entry_points = {
