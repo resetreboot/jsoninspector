@@ -25,7 +25,7 @@ class MainWindowMethods(object):
         principal
         """
         self.builder = gtk.Builder()
-        self.builder.add_from_file(resource_filename(__name__,'../../src/jsoninspector.glade'))
+        self.builder.add_from_file(resource_filename(__name__,'jsoninspector.glade'))
         self.builder.connect_signals(self)
 
         # Prepara los renderizados de columna y las asigna a los valores
