@@ -4,78 +4,73 @@
 from pkg_resources import resource_filename
 
 import json
-import sys
-import pygtk
 
-try:
-    pygtk.require("2.0")
-except:
-    print "Versión de PyGTK incorrecta!\n"
-    sys.exit(1)
+from gi.repository import Gtk, Gdk, Gio
 
-import gtk
-
-class MainWindowMethods(object):
+class MainWindowMethods(Gtk.Application):
     """
-    Clase que contiene los métodos de la ventana principal
+    Main Application object with the main window signals
     """
     def __init__(self, logic):
+        Gtk.Application.__init__(self, application_id = "apps.gnome.stevedore",
+                                 flags = Gio.ApplicationFlags.FLAGS_NONE)
+
+        # We store the reference to the app logic
+        self.logicObj = logic
+
+        self.connect("activate", self.on_app_start)
+
+    def on_app_start(self, data = None):
         """
-        Carga y conecta el XML de gtkBuilder, además de mostrar la ventana
-        principal
+        Loads the MainWindow widgets, shows it up and starts the main loop
         """
-        self.builder = gtk.Builder()
+        self.builder = Gtk.Builder()
         self.builder.add_from_file(resource_filename(__name__,'jsoninspector.glade'))
         self.builder.connect_signals(self)
 
-        # Prepara los renderizados de columna y las asigna a los valores
-        cell = gtk.CellRendererText()
+        # Prepares the renders of columns and assigns the values
+        cell = Gtk.CellRendererText()
         columns = self.builder.get_object("treeviewcolumn1")
-        columns.pack_start(cell)
+        columns.pack_start(cell, True)
         columns.add_attribute(cell, 'text', 0)
         treeview = self.builder.get_object("treeview1")
-        # Esta columna es la que tiene los nodos de apertura y cierre
+        # This column has the open and collapse nodes
         treeview.set_expander_column(columns)
 
-        cell = gtk.CellRendererText()
+        cell = Gtk.CellRendererText()
         columns = self.builder.get_object("treeviewcolumn2")
-        columns.pack_start(cell)
+        columns.pack_start(cell, True)
         columns.add_attribute(cell, 'text', 1)
 
-        cell = gtk.CellRendererText()
+        cell = Gtk.CellRendererText()
         columns = self.builder.get_object("treeviewcolumn3")
-        columns.pack_start(cell)
+        columns.pack_start(cell, True)
         columns.add_attribute(cell, 'text', 2)
 
-        # Obtenemos la ventana y la mostramos completamente
+        # We get the window and show it
         self.window = self.builder.get_object("MainWindow")
+        self.add_window(self.window)
         self.window.show_all()
-
-        # Obtenemos un enlace al objeto de lógica de aplicación
-        self.logicObj = logic
 
     def onOpenMenuClicked(self, event):
         """
-        El usuario ha presionado Abrir en el menu
+        User has pressed Open in the menu
         """
-        # Creamos el dialogo de abrir fichero
-        chooser = gtk.FileChooserDialog(title=None,
-                                        action=gtk.FILE_CHOOSER_ACTION_OPEN,
-                                        buttons=(gtk.STOCK_CANCEL,
-                                        gtk.RESPONSE_CANCEL,
-                                        gtk.STOCK_OPEN,
-                                        gtk.RESPONSE_OK))
-        chooser.set_default_response(gtk.RESPONSE_OK)
+        # Create the FileChooser Dialog
+        chooser = Gtk.FileChooserDialog("Open JSON text file", self.window,
+                                        Gtk.FileChooserAction.OPEN,
+                                        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                                        Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
 
-        # Lo lanzamos
+        # Launch it
         response = chooser.run()
 
-        # Si hemos seleccionado un fichero, lo cargamos
-        if response == gtk.RESPONSE_OK:
+        # If we choose a file, we load it
+        if response == Gtk.ResponseType.OK:
             filename = chooser.get_filename()
             label = self.builder.get_object("StatusLabel")
 
-            # Según todo haya ido, actualizamos la barra de estado 
+            # We update the statusbar accordingly to what has happened
             if self.logicObj.loadjson(filename):
                 
                 label.set_text(filename)
@@ -87,20 +82,20 @@ class MainWindowMethods(object):
                 
                 label.set_text("No hay JSON cargado")
 
-        # Nos deshacemos del dialogo
+        # We finish the dialog
         chooser.destroy()
 
     def onCopyJSONClicked(self, widget):
         """
-        Se ha pulsado Copiar JSON
+        User asked to paste a JSON code
         """
-        # Mostrar la ventana de texto
+        # Show up the TextWindow
         textWindow = self.builder.get_object("TextWindow")
         textWindow.show_all()
 
     def onCopyJSONDelete(self, widget, event):
         """
-        Se ha dado a cerrar la ventana de copiar texto
+        We've been told to close the CopyJSON Window
         """
         textWindow = self.builder.get_object("TextWindow")
         textWindow.hide()
@@ -109,7 +104,7 @@ class MainWindowMethods(object):
 
     def onCopyJSONDestroy(self, widget):
         """
-        Se ha cerrado la ventana
+        We've been tasked with removing the CopyJSON window
         """
         textWindow = self.builder.get_object("TextWindow")
         textWindow.hide()
@@ -118,12 +113,12 @@ class MainWindowMethods(object):
 
     def onCopyJSONAcceptClicked(self, widget):
         """
-        Se ha aceptado el código
+        The input is finished and accepted.
         """
         textView = self.builder.get_object("textview1")
         jsonBuffer = textView.get_buffer()
         jsonText = jsonBuffer.get_text(jsonBuffer.get_start_iter(),
-                                       jsonBuffer.get_end_iter())
+                                       jsonBuffer.get_end_iter(), True)
 
         textWindow = self.builder.get_object("TextWindow")
         textWindow.hide()
@@ -138,24 +133,25 @@ class MainWindowMethods(object):
 
     def onCopyJSONCancelClicked(self, widget):
         """
-        Se ha cancelado
+        The user changed its minds and pressed cancel
         """
         textWindow = self.builder.get_object("TextWindow")
         textWindow.hide()
 
     def onExitMenuClicked(self, widget):
         """
-        Se ha pulsado salir
+        Menu option Exit has been clicked
         """
-        gtk.main_quit()
-        sys.exit(0)
+        self.quit()
+
+    def onAboutMenuActivate(self, widget):
+        pass
 
     def onMainWindowDelete(self, widget, event):
         """
-        Se ha destruido o mandado cerrar la ventana principal
+        Our MainWindow has been deleted or closed
         """
-        gtk.main_quit()
-        sys.exit(0)
+        pass
 
 
 class LogicObject(object):
@@ -246,21 +242,10 @@ class LogicObject(object):
                                                str(type(elems[key_val]))])
 
 
-class MainApp(object):
-    """
-    Clase principal
-    """
-    @staticmethod
-    def start():
-        logicObject = LogicObject()
-        mainWindow = MainWindowMethods(logicObject)
-
-        gtk.main()
-        
-
-# Ejecucion del programa principal
-
+# Main procedure
 if __name__ == "__main__":
     
-    app = MainApp()
-    app.start()
+    logicObject = LogicObject()
+
+    mainWindow = MainWindowMethods(logicObject)
+    mainWindow.run(None)
