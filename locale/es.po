@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-14 12:21+0200\n"
-"PO-Revision-Date: 2014-07-14 12:24+0100\n"
+"POT-Creation-Date: 2014-07-14 12:52+0200\n"
+"PO-Revision-Date: 2014-07-14 12:54+0100\n"
 "Last-Translator: José Carlos Cuevas <reset@localhost>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: jsoninspector.py:81
 msgid "Open JSON text file"
-msgstr "Abrir fichero de texto JSON"
+msgstr "Abrir archivo de texto JSON"
 
 #: jsoninspector.py:104
 msgid "No JSON loaded."
@@ -40,37 +40,41 @@ msgid "Not valid JSON"
 msgstr "JSON no válido"
 
 #: jsoninspector.glade.h:1
+msgid "About"
+msgstr "Acerca de"
+
+#: jsoninspector.glade.h:2
 msgid "Enter JSON Text"
 msgstr "Introduzca texto JSON"
 
-#: jsoninspector.glade.h:2
+#: jsoninspector.glade.h:3
 msgid "JSON Inspector"
 msgstr "JSON Inspector"
 
-#: jsoninspector.glade.h:3
+#: jsoninspector.glade.h:4
 msgid "_File"
 msgstr "_Archivo"
 
-#: jsoninspector.glade.h:4
-msgid "Cop_y JSON"
-msgstr "Cop_iar JSON"
-
 #: jsoninspector.glade.h:5
+msgid "Cop_y JSON"
+msgstr "_Copiar JSON"
+
+#: jsoninspector.glade.h:6
 msgid "_Help"
 msgstr "A_yuda"
 
-#: jsoninspector.glade.h:6
+#: jsoninspector.glade.h:7
 msgid "Node"
 msgstr "Nodo"
 
-#: jsoninspector.glade.h:7
+#: jsoninspector.glade.h:8
 msgid "Value"
 msgstr "Valor"
 
-#: jsoninspector.glade.h:8
+#: jsoninspector.glade.h:9
 msgid "Type"
 msgstr "Tipo"
 
-#: jsoninspector.glade.h:9
+#: jsoninspector.glade.h:10
 msgid "No JSON loaded"
 msgstr "No se ha cargado JSON"
