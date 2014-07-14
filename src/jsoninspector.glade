@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.16.1 -->
-<interface>
-  <requires lib="gtk+" version="3.0"/>
+<interface domain="jsoninspector">
+  <requires lib="gtk+" version="3.6"/>
   <object class="GtkWindow" id="TextWindow">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Introducir texto JSON</property>
+    <property name="title" translatable="yes">Enter JSON Text</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">200</property>
@@ -48,6 +48,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
                 <signal name="clicked" handler="onCopyJSONCancelClicked" swapped="no"/>
               </object>
               <packing>
@@ -65,6 +66,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
                 <signal name="clicked" handler="onCopyJSONAcceptClicked" swapped="no"/>
               </object>
               <packing>
@@ -246,7 +248,7 @@
                 <child>
                   <object class="GtkTreeViewColumn" id="treeviewcolumn1">
                     <property name="resizable">True</property>
-                    <property name="title">Nodo</property>
+                    <property name="title" translatable="yes">Node</property>
                     <property name="expand">True</property>
                     <property name="clickable">True</property>
                     <property name="sort_column_id">0</property>
@@ -255,14 +257,14 @@
                 <child>
                   <object class="GtkTreeViewColumn" id="treeviewcolumn2">
                     <property name="resizable">True</property>
-                    <property name="title">Valor</property>
+                    <property name="title" translatable="yes">Value</property>
                     <property name="expand">True</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkTreeViewColumn" id="treeviewcolumn3">
                     <property name="resizable">True</property>
-                    <property name="title">Tipo</property>
+                    <property name="title" translatable="yes">Type</property>
                     <property name="expand">True</property>
                   </object>
                 </child>
@@ -284,7 +286,7 @@
               <object class="GtkLabel" id="StatusLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">No hay JSON cargado</property>
+                <property name="label" translatable="yes">No JSON loaded</property>
                 <attributes>
                   <attribute name="gravity" value="west"/>
                 </attributes>

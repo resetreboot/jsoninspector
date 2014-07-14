@@ -2,17 +2,37 @@
 # -*- coding: utf-8 -*-
 
 from pkg_resources import resource_filename
+from gi.repository import Gtk, Gdk, Gio
 
 import json
 
-from gi.repository import Gtk, Gdk, Gio
+# Internationalization support
+import gettext
+import locale
+
+APP = "jsoninspector"
+DIR = "po"
+
+locale.setlocale(locale.LC_ALL, '')
+
+try:
+    gettext.bindtextdomain(APP, DIR)
+    locale.bindtextdomain(APP, DIR)
+
+except:
+    gettext.bindtextdomain(APP, "../locale/")
+    locale.bindtextdomain(APP, "../locale/")
+
+gettext.textdomain(APP)
+_ = gettext.gettext
+
 
 class MainWindowMethods(Gtk.Application):
     """
     Main Application object with the main window signals
     """
     def __init__(self, logic):
-        Gtk.Application.__init__(self, application_id = "apps.gnome.stevedore",
+        Gtk.Application.__init__(self, application_id = "apps.gnome.jsoninspector",
                                  flags = Gio.ApplicationFlags.FLAGS_NONE)
 
         # We store the reference to the app logic
@@ -25,6 +45,7 @@ class MainWindowMethods(Gtk.Application):
         Loads the MainWindow widgets, shows it up and starts the main loop
         """
         self.builder = Gtk.Builder()
+        self.builder.set_translation_domain(APP)
         self.builder.add_from_file(resource_filename(__name__,'jsoninspector.glade'))
         self.builder.connect_signals(self)
 
@@ -57,7 +78,7 @@ class MainWindowMethods(Gtk.Application):
         User has pressed Open in the menu
         """
         # Create the FileChooser Dialog
-        chooser = Gtk.FileChooserDialog("Open JSON text file", self.window,
+        chooser = Gtk.FileChooserDialog(_("Open JSON text file"), self.window,
                                         Gtk.FileChooserAction.OPEN,
                                         (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                                         Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
@@ -80,7 +101,7 @@ class MainWindowMethods(Gtk.Application):
                 
             else:
                 
-                label.set_text("No hay JSON cargado")
+                label.set_text(_("No JSON loaded."))
 
         # We finish the dialog
         chooser.destroy()
@@ -128,7 +149,7 @@ class MainWindowMethods(Gtk.Application):
         if self.logicObj.loadJSONText(jsonText):
             
             status_label = self.builder.get_object("StatusLabel") 
-            status_label.set_text("Cargado desde portapapeles.")
+            status_label.set_text(_("Loaded from the clipboard."))
             self.logicObj.loadTree(treestore)
 
     def onCopyJSONCancelClicked(self, widget):
@@ -170,7 +191,7 @@ class LogicObject(object):
         try:
             self.json = json.loads(f.read())
         except ValueError:
-            print "JSON no válido!\n"
+            print _("Not valid JSON!\n")
             self.json = None
             f.close()
 
@@ -186,7 +207,7 @@ class LogicObject(object):
         try:
             self.json = json.loads(text)
         except ValueError:
-            print "JSON no válido"
+            print _("Not valid JSON")
             self.json = None
             
             return False
