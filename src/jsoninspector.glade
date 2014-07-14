@@ -14,6 +14,8 @@
     <property name="authors">José Carlos Cuevas Albadalejo</property>
     <property name="translator_credits">José Carlos Cuevas Albadalejo</property>
     <property name="license_type">gpl-3-0</property>
+    <signal name="close" handler="onAboutDialogClose" swapped="no"/>
+    <signal name="delete-event" handler="onAboutDialogDeleteEvent" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="aboutdialog-vbox1">
         <property name="can_focus">False</property>

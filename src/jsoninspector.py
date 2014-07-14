@@ -154,7 +154,7 @@ class MainWindowMethods(Gtk.Application):
 
     def onCopyJSONCancelClicked(self, widget):
         """
-        The user changed its minds and pressed cancel
+        The user changed its mind and pressed cancel
         """
         textWindow = self.builder.get_object("TextWindow")
         textWindow.hide()
