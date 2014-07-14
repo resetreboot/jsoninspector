@@ -4,7 +4,7 @@ distribute_setup.use_setuptools()
 from setuptools import setup, find_packages
 setup(
     name = "jsoninspector",
-    version = "1.3",
+    version = "1.5",
     packages = find_packages('src', exclude=['distribute_setup']),
     scripts = ['src/jsoninspector.py'],
     entry_points = {
@@ -23,5 +23,5 @@ setup(
     description = "JSON Inspector is a simple application to study JSON code",
     license = "GPLv3",
     keywords = "json inspect gtk gnome",
-    url = "",   # project home page, if any
+    url = "https://github.com/resetreboot/jsoninspector",   # project home page, if any
 )
