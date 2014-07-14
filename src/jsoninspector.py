@@ -174,6 +174,14 @@ class MainWindowMethods(Gtk.Application):
         """
         pass
 
+    def onAboutDialogClose(self, widget, event = None):
+        pass
+
+    def onAboutDialogDeleteEvent(self, widget, evenr = None):
+        pass
+
+
+
 
 class LogicObject(object):
     """
