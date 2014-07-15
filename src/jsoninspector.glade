@@ -4,11 +4,17 @@
   <requires lib="gtk+" version="3.6"/>
   <object class="GtkAboutDialog" id="AboutDialog">
     <property name="can_focus">False</property>
-    <property name="type">popup</property>
     <property name="title" translatable="yes">About</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
+    <property name="deletable">False</property>
+    <property name="gravity">center</property>
+    <property name="has_resize_grip">False</property>
     <property name="program_name">JSON Inspector</property>
-    <property name="version">2.0</property>
+    <property name="version">v2.0</property>
     <property name="website">https://github.com/resetreboot/jsoninspector</property>
     <property name="website_label">https://github.com/resetreboot/jsoninspector</property>
     <property name="authors">José Carlos Cuevas Albadalejo</property>

@@ -1,17 +1,14 @@
-import distribute_setup
-distribute_setup.use_setuptools()
+import ez_setup, sys, shutils
+ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
+
 setup(
     name = "jsoninspector",
-    version = "1.5",
+    version = "2.0",
     packages = find_packages('src', exclude=['distribute_setup']),
-    scripts = ['src/jsoninspector.py'],
-    entry_points = {
-        'gui_scripts': [
-            'jsoninspector = jsoninspector:MainApp.start',
-        ]
-    },
+    scripts = ['jsoninspector.py'],
+    include_package_data = True,
     package_data = {
         # If any package contains *.glade files, include them:
         '': ['*.glade'],
@@ -25,3 +22,6 @@ setup(
     keywords = "json inspect gtk gnome",
     url = "https://github.com/resetreboot/jsoninspector",   # project home page, if any
 )
+
+# if sys.path != 'win32' and sys.path != 'darwin':
+#     shutils.copytree('locale/po/', '/usr/share/locale/')

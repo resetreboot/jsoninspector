@@ -2,26 +2,31 @@
 # -*- coding: utf-8 -*-
 
 from pkg_resources import resource_filename
-from gi.repository import Gtk, Gdk, Gio
+from gi.repository import Gtk, Gio
 
-import json
+import json, sys, os.path
 
 # Internationalization support
 import gettext
 import locale
 
 APP = "jsoninspector"
-DIR = "po"
+
+if os.path.exists('../locale/po'):
+    # We're in the development tree
+    DIR = "../locale/po/"
+
+elif sys.platform != 'win32' and sys.platform != 'darwin':
+    DIR = "/usr/share/locale/"
+
+else:
+    DIR = "po"
 
 locale.setlocale(locale.LC_ALL, '')
 
-try:
-    gettext.bindtextdomain(APP, DIR)
-    locale.bindtextdomain(APP, DIR)
+gettext.bindtextdomain(APP, DIR)
+locale.bindtextdomain(APP, DIR)
 
-except:
-    gettext.bindtextdomain(APP, "../locale/")
-    locale.bindtextdomain(APP, "../locale/")
 
 gettext.textdomain(APP)
 _ = gettext.gettext
@@ -166,7 +171,12 @@ class MainWindowMethods(Gtk.Application):
         self.quit()
 
     def onAboutMenuActivate(self, widget):
-        pass
+        """
+        About option clicked
+        """
+        about_dialog = self.builder.get_object("AboutDialog")
+        about_dialog.run()
+        about_dialog.hide()
 
     def onMainWindowDelete(self, widget, event):
         """
@@ -177,10 +187,8 @@ class MainWindowMethods(Gtk.Application):
     def onAboutDialogClose(self, widget, event = None):
         pass
 
-    def onAboutDialogDeleteEvent(self, widget, evenr = None):
+    def onAboutDialogDeleteEvent(self, widget, event = None):
         pass
-
-
 
 
 class LogicObject(object):
