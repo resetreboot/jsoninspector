@@ -11,10 +11,10 @@ import locale
 
 APP = "jsoninspector"
 
-if os.path.exists('../locale/po') and os.path.exists('../res'):
+if os.path.exists('../locale/po') and os.path.exists('../../res'):
     # We're in the development tree
-    DIR = "../locale/po/"
-    RESOURCES = "../res/"
+    DIR = "../../locale/po/"
+    RESOURCES = "../../res/"
 
 elif sys.platform != 'win32' and sys.platform != 'darwin':
     DIR = "/usr/share/locale/"
@@ -279,6 +279,8 @@ class LogicObject(object):
                 treestore.append(parent_node, [str(key_val), 
                                                str(elems[key_val]),
                                                str(type(elems[key_val]))])
+
+
 
 
 # Main procedure

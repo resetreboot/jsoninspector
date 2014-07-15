@@ -59,13 +59,13 @@ class CustomInstall(install):
             except:
                 print "Warning: error copying .desktop entry."
 
-
 setup(
-    name = "jsoninspector",
+    name = "Jsoninspector",
     version = "2.0",
-    packages = find_packages('src', exclude=['ez_setup']),
-    scripts = ['src/jsoninspector.py'],
+    packages = find_packages('src', exclude = ['ez_setup']),
+    entry_points = { 'gui_scripts' : [ 'jsoninspector = jsoninspector:main_start' ] },
     include_package_data = True,
+    package_dir = { '' : 'src' },
     package_data = {
         # If any package contains *.glade files, include them:
         'src': ['*.glade'],

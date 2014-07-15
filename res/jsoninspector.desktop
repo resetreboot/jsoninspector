@@ -1,9 +1,8 @@
 [Desktop Entry]
 Name=JSON Inspector
-GenericName=JSON Inspector
 Exec=jsoninspector.py
 Terminal=false                                  
-Icon=/usr/local/share/jsoninspector/
+Icon=jsoninspector
 Type=Application                                
-Categories=Application;Programming;
+Categories=GNOME;GTK;Development;
 Comment=JSON Inspector              
