@@ -40,6 +40,12 @@ class CustomInstall(install):
                     print "Warning: error copying icon {size}.".format(icon_size)
 
             try:
+                shutil.copyfile('res/jsoninspector48x48.png', '/usr/share/pixmaps/jsoninspector.png')
+
+            except:
+                print "Warning: error copying icon to pixmaps directory."
+
+            try:
                 print "Installing glade file..."
                 shutil.copyfile('res/jsoninspector.glade', '/usr/local/share/jsoninspector/jsoninspector.desktop')
 

@@ -1,11 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
-Version=2.0                                     
-Name[en_US]=JSON Inspector
+Name=JSON Inspector
 GenericName=JSON Inspector
 Exec=jsoninspector.py
 Terminal=false                                  
-Icon[en_US]=/usr/local/share/jsoninspector/
+Icon=/usr/local/share/jsoninspector/
 Type=Application                                
-Categories=Application;Programming
-Comment[en_US]=JSON Inspector              
+Categories=Application;Programming;
+Comment=JSON Inspector              
