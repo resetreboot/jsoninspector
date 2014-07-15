@@ -1,4 +1,4 @@
-import ez_setup, sys, shutil, os
+import ez_setup, sys, shutil, os, os.path
 ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
@@ -14,20 +14,24 @@ class CustomInstall(install):
         # Now we do our own magic
         if sys.platform != 'win32' and sys.platform != 'darwin':
             try:
+                print "Creating shared directory..."
                 os.mkdir("/usr/local/share/jsoninspector", mode = 0755)
 
             except:
-                print "Warning: Couldn't create /usr/local/share/jsoninspector"
+                if not os.path.exists("/usr/local/share/jsoninspector"):
+                    print "Warning: Couldn't create /usr/local/share/jsoninspector"
 
             # Copy the translations
             try:
+                print "Installing translations..."
                 copy_tree('locale/po/', '/usr/share/locale/')
 
             except:
                 print "Warning: error copying translation files."
     
             # Copy the icons
-            for icon_size in ['16x16', '32x32', '64x64', '128x128']:
+            print "Installing application icons..."
+            for icon_size in ['16x16', '32x32', '48x48', '64x64', '128x128']:
                 try:
                     shutil.copyfile('res/jsoninspector' + icon_size + ".png", 
                                     '/usr/share/icons/hicolor/' + icon_size + "/apps/jsoninspector.png")
@@ -36,12 +40,14 @@ class CustomInstall(install):
                     print "Warning: error copying icon {size}.".format(icon_size)
 
             try:
+                print "Installing glade file..."
                 shutil.copyfile('res/jsoninspector.glade', '/usr/local/share/jsoninspector/jsoninspector.desktop')
 
             except:
-                    print "Warning: error copyin .glade file."
+                    print "Warning: error copying .glade file."
 
             try:
+                print "Installing desktop entry..."
                 shutil.copyfile('res/jsoninspector.desktop', '/usr/share/applications/jsoninspector.desktop')
 
             except:
