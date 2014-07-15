@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pkg_resources import resource_filename
 from gi.repository import Gtk, Gio
 
 import json, sys, os.path
@@ -12,15 +11,18 @@ import locale
 
 APP = "jsoninspector"
 
-if os.path.exists('../locale/po'):
+if os.path.exists('../locale/po') and os.path.exists('../res'):
     # We're in the development tree
     DIR = "../locale/po/"
+    RESOURCES = "../res/"
 
 elif sys.platform != 'win32' and sys.platform != 'darwin':
     DIR = "/usr/share/locale/"
+    RESOURCES = "/usr/local/share/jsoninspector"
 
 else:
     DIR = "po"
+    RESOURCES = "res/"
 
 locale.setlocale(locale.LC_ALL, '')
 
@@ -51,7 +53,7 @@ class MainWindowMethods(Gtk.Application):
         """
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(APP)
-        self.builder.add_from_file(resource_filename(__name__,'jsoninspector.glade'))
+        self.builder.add_from_file(os.path.join(RESOURCES, 'jsoninspector.glade'))
         self.builder.connect_signals(self)
 
         # Prepares the renders of columns and assigns the values
