@@ -64,13 +64,7 @@ setup(
     version = "2.0",
     packages = find_packages('src', exclude = ['ez_setup']),
     entry_points = { 'gui_scripts' : [ 'jsoninspector = jsoninspector:main_start' ] },
-    include_package_data = True,
     package_dir = { '' : 'src' },
-    package_data = {
-        # If any package contains *.glade files, include them:
-        'src': ['*.glade'],
-    },
-
     # metadata for upload to PyPI
     author = "Jose Carlos Cuevas",
     author_email = "reset.reboot@gmail.com",
