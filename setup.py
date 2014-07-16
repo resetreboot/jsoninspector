@@ -15,7 +15,7 @@ class CustomInstall(install):
         if sys.platform != 'win32' and sys.platform != 'darwin':
             try:
                 print "Creating shared directory..."
-                os.mkdir("/usr/local/share/jsoninspector", mode = 0755)
+                os.mkdir("/usr/local/share/jsoninspector", 0755)
 
             except:
                 if not os.path.exists("/usr/local/share/jsoninspector"):
@@ -74,7 +74,7 @@ class CustomInstall(install):
 
             try:
                 print "Installing glade file..."
-                shutil.copyfile('res/jsoninspector.glade', '/usr/local/share/jsoninspector/jsoninspector.desktop')
+                shutil.copyfile('res/jsoninspector.glade', '/usr/local/share/jsoninspector/jsoninspector.glade')
 
             except:
                     print "Warning: error copying .glade file."
