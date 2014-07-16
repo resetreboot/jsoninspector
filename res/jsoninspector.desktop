@@ -1,8 +1,21 @@
 [Desktop Entry]
-Name=JSON Inspector
-Exec=jsoninspector.py
-Terminal=false                                  
+Categories=GTK;Development;
+Comment[en_US]=A tool for examining JSON text easily
+Comment=A tool for examining JSON text easily
+Exec=jsoninspector
+GenericName[en_US]=JSON Inspector
+GenericName=JSON Inspector
 Icon=jsoninspector
-Type=Application                                
-Categories=GNOME;GTK;Development;
-Comment=JSON Inspector              
+MimeType=
+Name[en_US]=JSON Inspector
+Name=JSON Inspector
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+TryExec=/usr/bin/jsoninspector
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

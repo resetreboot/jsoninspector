@@ -1,4 +1,4 @@
-import ez_setup, sys, shutil, os, os.path
+import ez_setup, sys, shutil, os, os.path, subprocess
 ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
@@ -28,22 +28,49 @@ class CustomInstall(install):
 
             except:
                 print "Warning: error copying translation files."
+
+            # Generate the icons
+            try:
+                result = subprocess.call(['./res/get_sizes.sh'])
+
+            except:
+                result = 1
+
+            if result != 0:
+                print "Warning: Error generating icons"
     
             # Copy the icons
             print "Installing application icons..."
-            for icon_size in ['16x16', '32x32', '48x48', '64x64', '128x128']:
+            for icon_size in ['{sz}x{sz}'.format(sz = x) for x in ['16', '22','24', '32', '36', '48', '64', '72', '96', '128', '192']]:
                 try:
                     shutil.copyfile('res/jsoninspector' + icon_size + ".png", 
                                     '/usr/share/icons/hicolor/' + icon_size + "/apps/jsoninspector.png")
 
                 except:
-                    print "Warning: error copying icon {size}.".format(icon_size)
+                    print "Warning: error copying icon {size}.".format(size = icon_size)
 
             try:
                 shutil.copyfile('res/jsoninspector48x48.png', '/usr/share/pixmaps/jsoninspector.png')
 
             except:
                 print "Warning: error copying icon to pixmaps directory."
+
+            try:
+                shutil.copyfile('res/jsoninspector.svg' ,'/usr/share/icons/hicolor/scalable/apps/jsoninspector.svg')
+
+            except:
+                print "Warning: error copying svg to scalable."
+
+            print "Updating icon cache..."
+
+            try:
+                result = subprocess.call(['/usr/bin/gtk-update-icon-cache /usr/share/icons/hicolor/'])
+
+            except:
+                result = 1
+            
+            if result != 0:
+                print "Warning: Error updating hicolor icon cache."
 
             try:
                 print "Installing glade file..."
