@@ -6,7 +6,7 @@ setup(
     name = "jsoninspector",
     version = "1.3",
     packages = find_packages('src', exclude=['distribute_setup']),
-    scripts = ['src/jsoninspector.py'],
+    scripts = ['src/jsoninspector.py','src/jsoninspector.glade'],
     entry_points = {
         'gui_scripts': [
             'jsoninspector = jsoninspector:MainApp.start',
