@@ -217,6 +217,26 @@ class LogicObject(object):
                 # los nodos, añadidos como hijos de este
                 self._loadTreeRec(treestore, self.json[key_val], parent_node)
 
+            elif type(self.json[key_val]) is list:
+                count = 0
+                # Añadimos el nodo, y obtenemos la referencia
+                parent_node = treestore.append(None, 
+                                               [str(key_val),
+                                               "", ""])
+                for elem in self.json[key_val]:
+                    if type(elem) is dict:
+                        another_node = treestore.append(parent_node,
+                                                        [unicode(key_val) + u"[" + unicode(count) + u"]",
+                                                        "", unicode(type(elem))])
+                        self._loadTreeRec(treestore, elem, another_node)
+
+                    else:
+                        treestore.append(parent_node, [unicode(key_val) + u"[" + unicode(count) + u"]",
+                                                       unicode(elem),
+                                                       unicode(type(elem))])
+
+                    count += 1
+
             else:
 
                 # Tenemos un nodo hoja, obtenemos el valor y el tipo y lo
@@ -241,6 +261,26 @@ class LogicObject(object):
                 # De manera recursiva, entramos en el diccionario y obtenemos
                 # los nodos, añadidos como hijos de este
                 self._loadTreeRec(treestore, elems[key_val], new_parent_node)
+
+            elif type(elems[key_val]) is list:
+                count = 0
+                # Añadimos el nodo, y obtenemos la referencia
+                new_parent_node = treestore.append(parent_node, 
+                                                   [str(key_val),
+                                                   "", unicode(type(elem))])
+                for elem in elems[key_val]:
+                    if type(elem) is dict:
+                        another_node = treestore.append(new_parent_node,
+                                                        [unicode(key_val) + u"[" + unicode(count) + u"]",
+                                                        "", ""])
+                        self._loadTreeRec(treestore, elem, another_node)
+
+                    else:
+                        treestore.append(new_parent_node, [unicode(key_val) + u"[" + unicode(count) + u"]",
+                                                           unicode(elem),
+                                                           unicode(type(elem))])
+
+                    count += 1
 
             else:
 
