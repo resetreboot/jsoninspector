@@ -207,88 +207,53 @@ class LogicObject(object):
         Carga el JSON en el tree store para mostrarlo
         """
         for key_val in self.json.keys():
+            self.process_node(treestore, self.json[key_val], key_val)
 
-            # Si el elemento contiene un diccionario
-            if type(self.json[key_val]) is dict:
-
-                # Añadimos el nodo, y obtenemos la referencia
-                parent_node = treestore.append(None, [str(key_val), "", ""])
-                # De manera recursiva, entramos en el diccionario y obtenemos
-                # los nodos, añadidos como hijos de este
-                self._loadTreeRec(treestore, self.json[key_val], parent_node)
-
-            elif type(self.json[key_val]) is list:
-                count = 0
-                # Añadimos el nodo, y obtenemos la referencia
-                parent_node = treestore.append(None, 
-                                               [str(key_val),
-                                               "", ""])
-                for elem in self.json[key_val]:
-                    if type(elem) is dict:
-                        another_node = treestore.append(parent_node,
-                                                        [unicode(key_val) + u"[" + unicode(count) + u"]",
-                                                        "", unicode(type(elem))])
-                        self._loadTreeRec(treestore, elem, another_node)
-
-                    else:
-                        treestore.append(parent_node, [unicode(key_val) + u"[" + unicode(count) + u"]",
-                                                       unicode(elem),
-                                                       unicode(type(elem))])
-
-                    count += 1
-
-            else:
-
-                # Tenemos un nodo hoja, obtenemos el valor y el tipo y lo
-                # añadimos
-                treestore.append(None, [str(key_val), 
-                                        str(self.json[key_val]),
-                                        str(type(self.json[key_val]))])
 
     def _loadTreeRec(self, treestore, elems, parent_node):
         """
         Adición recursiva de elementos al árbol
         """
         for key_val in elems.keys():
+            self.process_node(treestore, elems[key_val], key_val, parent_node)
 
-            # Si el elemento contiene un diccionario
-            if type(elems[key_val]) is dict:
+    def process_node(self, treestore, node, node_key, parent_node = None):
+        # Si el elemento contiene un diccionario
+        if type(node) is dict:
 
-                # Añadimos el nodo, y obtenemos la referencia
-                new_parent_node = treestore.append(parent_node, 
-                                                   [str(key_val),
-                                                   "", ""])
-                # De manera recursiva, entramos en el diccionario y obtenemos
-                # los nodos, añadidos como hijos de este
-                self._loadTreeRec(treestore, elems[key_val], new_parent_node)
+            # Añadimos el nodo, y obtenemos la referencia
+            new_node = treestore.append(parent_node, [unicode(node_key), u"", u""])
+            # De manera recursiva, entramos en el diccionario y obtenemos
+            # los nodos, añadidos como hijos de este
+            self._loadTreeRec(treestore, node, new_node)
 
-            elif type(elems[key_val]) is list:
-                count = 0
-                # Añadimos el nodo, y obtenemos la referencia
-                new_parent_node = treestore.append(parent_node, 
-                                                   [str(key_val),
-                                                   "", ""])
-                for elem in elems[key_val]:
-                    if type(elem) is dict:
-                        another_node = treestore.append(new_parent_node,
-                                                        [unicode(key_val) + u"[" + unicode(count) + u"]",
-                                                        "", unicode(type(elem))])
-                        self._loadTreeRec(treestore, elem, another_node)
+        elif type(node) is list:
+            count = 0
+            # Añadimos el nodo, y obtenemos la referencia
+            new_node = treestore.append(parent_node, 
+                                        [unicode(node_key),
+                                        "", ""])
+            for elem in node:
+                if type(elem) is dict:
+                    another_node = treestore.append(new_node,
+                                                    [unicode(node_key) + u"[" + unicode(count) + u"]",
+                                                    "", unicode(type(elem))])
+                    self._loadTreeRec(treestore, elem, another_node)
 
-                    else:
-                        treestore.append(new_parent_node, [unicode(key_val) + u"[" + unicode(count) + u"]",
-                                                           unicode(elem),
-                                                           unicode(type(elem))])
+                else:
+                    treestore.append(new_node, [unicode(node_key) + u"[" + unicode(count) + u"]",
+                                                unicode(elem),
+                                                unicode(type(elem))])
 
-                    count += 1
+                count += 1
 
-            else:
+        else:
 
-                # Tenemos un nodo hoja, obtenemos el valor y el tipo y lo
-                # añadimos
-                treestore.append(parent_node, [str(key_val), 
-                                               str(elems[key_val]),
-                                               str(type(elems[key_val]))])
+            # Tenemos un nodo hoja, obtenemos el valor y el tipo y lo
+            # añadimos
+            treestore.append(parent_node, [unicode(node_key), 
+                                           unicode(node),
+                                           unicode(type(node))])
 
 
 class MainApp(object):
