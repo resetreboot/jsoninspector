@@ -267,12 +267,12 @@ class LogicObject(object):
                 # Añadimos el nodo, y obtenemos la referencia
                 new_parent_node = treestore.append(parent_node, 
                                                    [str(key_val),
-                                                   "", unicode(type(elem))])
+                                                   "", ""])
                 for elem in elems[key_val]:
                     if type(elem) is dict:
                         another_node = treestore.append(new_parent_node,
                                                         [unicode(key_val) + u"[" + unicode(count) + u"]",
-                                                        "", ""])
+                                                        "", unicode(type(elem))])
                         self._loadTreeRec(treestore, elem, another_node)
 
                     else:
