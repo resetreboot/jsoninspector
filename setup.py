@@ -1,10 +1,10 @@
-import distribute_setup
-distribute_setup.use_setuptools()
+import ez_setup
+ez_setup.use_setuptools()
 
 from setuptools import setup, find_packages
 setup(
     name = "jsoninspector",
-    version = "1.4",
+    version = "1.5",
     packages = find_packages('src', exclude=['distribute_setup']),
     scripts = ['src/jsoninspector.py','src/jsoninspector.glade'],
     entry_points = {
