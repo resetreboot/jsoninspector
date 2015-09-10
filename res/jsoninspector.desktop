@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=Lightweight JSON utility to inspect JSON documents
+Terminal=false
+Name=JSON Inspector
+Exec=jsoninspector
+Type=Application
+Icon=jsoninspector

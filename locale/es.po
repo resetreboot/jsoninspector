@@ -1,0 +1,80 @@
+# Spanish translations for PACKAGE package
+# Traducciones al español para el paquete PACKAGE.
+# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# José Carlos Cuevas <reset@localhost>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-14 12:52+0200\n"
+"PO-Revision-Date: 2014-07-14 12:54+0100\n"
+"Last-Translator: José Carlos Cuevas <reset@localhost>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: jsoninspector.py:81
+msgid "Open JSON text file"
+msgstr "Abrir archivo de texto JSON"
+
+#: jsoninspector.py:104
+msgid "No JSON loaded."
+msgstr "No se ha cargado JSON."
+
+#: jsoninspector.py:152
+msgid "Loaded from the clipboard."
+msgstr "Cargado desde el portapapeles."
+
+#: jsoninspector.py:194
+msgid "Not valid JSON!\n"
+msgstr "JSON no válido!\n"
+
+#: jsoninspector.py:210
+msgid "Not valid JSON"
+msgstr "JSON no válido"
+
+#: jsoninspector.glade.h:1
+msgid "About"
+msgstr "Acerca de"
+
+#: jsoninspector.glade.h:2
+msgid "Enter JSON Text"
+msgstr "Introduzca texto JSON"
+
+#: jsoninspector.glade.h:3
+msgid "JSON Inspector"
+msgstr "JSON Inspector"
+
+#: jsoninspector.glade.h:4
+msgid "_File"
+msgstr "_Archivo"
+
+#: jsoninspector.glade.h:5
+msgid "Cop_y JSON"
+msgstr "_Copiar JSON"
+
+#: jsoninspector.glade.h:6
+msgid "_Help"
+msgstr "A_yuda"
+
+#: jsoninspector.glade.h:7
+msgid "Node"
+msgstr "Nodo"
+
+#: jsoninspector.glade.h:8
+msgid "Value"
+msgstr "Valor"
+
+#: jsoninspector.glade.h:9
+msgid "Type"
+msgstr "Tipo"
+
+#: jsoninspector.glade.h:10
+msgid "No JSON loaded"
+msgstr "No se ha cargado JSON"
